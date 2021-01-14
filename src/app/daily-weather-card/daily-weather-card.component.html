@@ -1,0 +1,7 @@
+<h3>{{ data.datetime}}</h3>
+<div class="flex">
+  <img [src]="data.iconUrl" height="100" width="100" />
+  <span class="temperature">{{ data.temperature }}<span>&#176;</span></span>
+</div>
+<div class="description">{{ data.description }}</div>
+<div class="windspeed">Wind: {{ data.windspeed }} meter/sec</div>

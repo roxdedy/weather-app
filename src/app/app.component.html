@@ -1,0 +1,44 @@
+<header class="app-header border-bottom shadow-sm">
+  <nav class="navbar p-0">
+    <div class="container-fluid">
+      <h1 class="navbar-brand p-0"><a [routerLink]="['/']" title="City Weather Today"><img src="assets/cloudy.svg"
+            width="46" height="46" class="mr-3" />City Weather Today</a></h1>
+    </div>
+  </nav>
+</header>
+<main class="app-content">
+  <div class="container">
+    <div class="city-selection">Select your city:
+      <ng-container *ngFor="let city of cities">
+        <button class="btn btn-light border mx-2" [ngClass]="{'active' : (selectedCity$ | async) == city.id }"
+          (click)="onSelected(city.id)" [title]="city.name">{{ city.name}}</button>
+      </ng-container>
+    </div>
+
+    <ng-container *ngIf="loading$ | async">
+      <div class="d-block spinner-border text-info mx-auto my-4" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="(data$ | async) as data;">
+      <ng-container *ngIf="data?.Error">
+        <div class="alert alert-danger" role="alert">
+          {{ data.Error }}
+        </div>
+      </ng-container>
+
+      <h2 class="content-h2 text-center">5-day weather forecast for <strong>{{ data.city }}</strong></h2>
+      <div class="row g-2">
+        <div class="col" *ngFor="let forecast of data.forecasts">
+          <daily-weather-card [data]="forecast"></daily-weather-card>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- <router-outlet></router-outlet> NOT BEING USED FOR NOW -->
+  </div>
+</main>
+<footer class="app-footer">
+  <p><small>Weather app built based on OpenWeather API. Developed by Roxdedy</small></p>
+</footer>
