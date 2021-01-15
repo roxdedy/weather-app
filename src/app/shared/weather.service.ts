@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, delay, finalize, map, tap } from 'rxjs/operators';
-import * as moment from 'moment';
 import { environment } from '../../environments/environment';
+import { ICityWeather, IError } from './models';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root',
@@ -18,14 +19,13 @@ export class WeatherService {
     false
   );
   getDailyForecast(cityId: number): Observable<any> {
+    this.loadingGetDailyForecast$.next(true);
     return this.http
-      .get(
+      .get<ICityWeather[]>(
         `${this.openweatherApiUrl}daily?id=${cityId}&cnt=5&units=metric&appid=${this.openweatherApiKey}`
       )
       .pipe(
-        tap(() => {
-          this.loadingGetDailyForecast$.next(true);
-        }),
+        tap(() => {}),
         delay(2000), // only for testing loading
         map((resp: any) => ({
           id: cityId,
@@ -45,7 +45,7 @@ export class WeatherService {
       );
   }
 
-  private handleError(err: any) {
+  private handleError(err: any): Observable<any> {
     let errorMessage: string = 'An error occurred ';
 
     if (err.error instanceof ErrorEvent) {
@@ -53,10 +53,10 @@ export class WeatherService {
     } else {
       errorMessage += `${err.status} - ${err.error.message}`;
     }
-    return of({ Error: errorMessage });
+    return throwError({ error: errorMessage } as IError);
   }
 
-  private sanitizeDate(date: any) {
+  private sanitizeDate(date: any): moment.MomentInput {
     return moment.unix(date).format('ddd, MMMM DD');
   }
 

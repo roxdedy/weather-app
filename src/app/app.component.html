@@ -1,8 +1,10 @@
-<header class="app-header border-bottom shadow-sm">
+<header class="app-header sticky-top border-bottom shadow-sm">
   <nav class="navbar p-0">
     <div class="container-fluid">
       <h1 class="navbar-brand p-0"><a [routerLink]="['/']" title="City Weather Today"><img src="assets/cloudy.svg"
-            width="46" height="46" class="mr-3" />City Weather Today</a></h1>
+            width="46" height="46" class="mr-3" />City Weather Today</a>
+        <span>Get the weather forecast for every city around the world</span>
+      </h1>
     </div>
   </nav>
 </header>
@@ -21,19 +23,21 @@
       </div>
     </ng-container>
 
-    <ng-container *ngIf="(data$ | async) as data;">
-      <ng-container *ngIf="data?.Error">
-        <div class="alert alert-danger" role="alert">
-          {{ data.Error }}
-        </div>
-      </ng-container>
+    <ng-container *ngIf="error$ | async as err">
+      <div class="alert alert-danger mt-4" role="alert">
+        {{ err.error }}
+      </div>
+    </ng-container>
 
+
+    <ng-container *ngIf="(data$ | async) as data">
       <h2 class="content-h2 text-center">5-day weather forecast for <strong>{{ data.city }}</strong></h2>
       <div class="row g-2">
-        <div class="col" *ngFor="let forecast of data.forecasts">
+        <div class="col" *ngFor="let forecast of data?.forecasts">
           <daily-weather-card [data]="forecast"></daily-weather-card>
         </div>
       </div>
+
     </ng-container>
 
     <!-- <router-outlet></router-outlet> NOT BEING USED FOR NOW -->
