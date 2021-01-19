@@ -1,15 +1,17 @@
-<header class="app-header sticky-top border-bottom shadow-sm">
-  <nav class="navbar p-0">
-    <div class="container-fluid">
-      <h1 class="navbar-brand p-0"><a [routerLink]="['/']" title="City Weather Today"><img src="assets/cloudy.svg"
-            width="46" height="46" class="mr-3" />City Weather Today</a>
-        <span>Get the weather forecast for every city around the world</span>
-      </h1>
-    </div>
+<header class="app-header sticky-top shadow">
+  <nav class="navbar">
+    <h1 class="navbar-brand p-0"><a [routerLink]="['/']" title="City Weather Today"><img src="assets/cloudy.svg"
+          width="46" height="46" class="mr-3" />City Weather Today</a>
+      <span>Get the weather forecast for every city around the world</span>
+    </h1>
   </nav>
 </header>
-
 <main class="app-content">
+  <div class="search-cities">
+    <form role="search" class="search search-full">
+      <input type="search" name="query" id="query" placeholder="Search for city" aria-label="Search" class="shadow-sm">
+    </form>
+  </div>
   <div class="container">
     <recently-searched-cities (selected)="onCitySelected($event)" [cities]="RECENTLY_SEARCHED_CITIES">
     </recently-searched-cities>

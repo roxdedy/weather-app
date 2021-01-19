@@ -29,12 +29,12 @@ export class WeatherService {
         map((resp: any) => ({
           id: cityId,
           city: resp.city.name,
-          forecasts: resp.list.map((f: any) => ({
-            datetime: this.sanitizeDate(f.dt),
-            temperature: this.sanitizeTemperature(f.temp.day),
-            windspeed: f.speed,
-            description: f.weather[0].description,
-            iconUrl: this.createIconUrl(f.weather[0].icon),
+          forecasts: resp.list.map((item: any) => ({
+            datetime: this.sanitizeDate(item.dt),
+            temperature: this.sanitizeTemperature(item.temp.day),
+            windspeed: item.speed,
+            description: item.weather[0].description,
+            iconUrl: this.createIconUrl(item.weather[0].icon),
           })),
         })),
         catchError(this.handleError),
