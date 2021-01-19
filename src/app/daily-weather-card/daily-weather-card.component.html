@@ -1,19 +1,21 @@
-<dl class="m-0">
-  <dt>
-    <h3><time>{{ data.datetime}}</time></h3>
-  </dt>
-  <dd>
-    <figure class="m-0">
-      <span class="flex">
-        <img [src]="data.iconUrl" height="100" width="100" />
-        <span class="temperature">{{ data.temperature }}<span>&#176;</span></span>
-      </span>
-      <figcaption class="description">
-        {{ data.description }}
-      </figcaption>
-    </figure>
-  </dd>
-  <dd class="windspeed">
-    Wind: {{ data.windspeed }} meter/sec
-  </dd>
-</dl>
+<div class="card p-3 border bg-light shadow-sm rounded">
+  <dl class="m-0">
+    <dt>
+      <h3><time>{{ data.datetime}}</time></h3>
+    </dt>
+    <dd>
+      <figure class="m-0">
+        <span class="flex">
+          <img [src]="data.iconUrl" height="100" width="100" [alt]="data.description" />
+          <span>{{ data.temperature }}<span>&#176;</span></span>
+        </span>
+        <figcaption>
+          {{ data.description }}
+        </figcaption>
+      </figure>
+    </dd>
+    <dd class="m-0">
+      Wind: {{ data.windspeed }} meter/sec
+    </dd>
+  </dl>
+</div>

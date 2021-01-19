@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { WeatherService } from './shared/weather.service';
-import { CITIES } from './shared/cities.data';
 import { EMPTY, Subject } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { IError } from './shared/models';
+import { CITIES } from './shared/cities.data';
 
 @Component({
   selector: 'weather-app',
@@ -11,7 +11,7 @@ import { IError } from './shared/models';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  cities = CITIES;
+  RECENTLY_SEARCHED_CITIES = CITIES;
   loading$ = this.weatherService.loadingGetDailyForecast$;
   selectedCity$: Subject<number> = new Subject<number>();
   error$: Subject<IError> = new Subject<IError>();
@@ -29,7 +29,7 @@ export class AppComponent {
 
   constructor(private weatherService: WeatherService) {}
 
-  onSelected(cityId: number): void {
+  onCitySelected(cityId: number): void {
     this.selectedCity$.next(cityId);
   }
 }

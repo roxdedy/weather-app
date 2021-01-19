@@ -8,14 +8,11 @@
     </div>
   </nav>
 </header>
+
 <main class="app-content">
   <div class="container">
-    <div class="city-selection">Select your city:
-      <ng-container *ngFor="let city of cities">
-        <button class="btn btn-light border mx-2" [ngClass]="{'active' : (selectedCity$ | async) == city.id }"
-          (click)="onSelected(city.id)" [title]="city.name">{{ city.name}}</button>
-      </ng-container>
-    </div>
+    <recently-searched-cities (selected)="onCitySelected($event)" [cities]="RECENTLY_SEARCHED_CITIES">
+    </recently-searched-cities>
 
     <ng-container *ngIf="loading$ | async">
       <div class="d-block spinner-border text-info mx-auto my-4" role="status">
@@ -29,7 +26,6 @@
       </div>
     </ng-container>
 
-
     <ng-container *ngIf="(data$ | async) as data">
       <h2 class="content-h2 text-center">5-day weather forecast for <strong>{{ data.city }}</strong></h2>
       <div class="row g-2">
@@ -37,7 +33,6 @@
           <daily-weather-card [data]="forecast"></daily-weather-card>
         </div>
       </div>
-
     </ng-container>
 
     <!-- <router-outlet></router-outlet> NOT BEING USED FOR NOW -->

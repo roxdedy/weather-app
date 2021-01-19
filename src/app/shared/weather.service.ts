@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { catchError, delay, finalize, map, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, delay, finalize, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { ICityWeather, IError } from './models';
 import * as moment from 'moment';
@@ -25,7 +25,6 @@ export class WeatherService {
         `${this.openweatherApiUrl}daily?id=${cityId}&cnt=5&units=metric&appid=${this.openweatherApiKey}`
       )
       .pipe(
-        tap(() => {}),
         delay(2000), // only for testing loading
         map((resp: any) => ({
           id: cityId,

@@ -1,0 +1,6 @@
+<div class="city-selection">Select your city:
+  <ng-container *ngFor="let city of cities">
+    <button class="btn btn-light border mx-2" [ngClass]="{'active' : selectedCityId == city.id }"
+      (click)="onSelected(city.id)" [title]="city.name">{{ city.name}}</button>
+  </ng-container>
+</div>

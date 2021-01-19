@@ -1,5 +1,5 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
-import { ICityWeather, IDailyForecast } from '../shared/models';
+import { Component, Input, OnInit } from '@angular/core';
+import { IDailyForecast } from '../shared/models';
 
 @Component({
   selector: 'daily-weather-card',
@@ -7,7 +7,7 @@ import { ICityWeather, IDailyForecast } from '../shared/models';
   styleUrls: ['./daily-weather-card.component.scss'],
 })
 export class DailyWeatherCardComponent implements OnInit {
-  @HostBinding('class') classes = 'card p-3 border bg-light card shadow-sm rounded';
+  // @HostBinding('class') classes = 'card';
   @Input() data!: IDailyForecast;
   constructor() {}
 

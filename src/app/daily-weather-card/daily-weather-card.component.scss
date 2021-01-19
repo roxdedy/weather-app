@@ -1,5 +1,6 @@
 :host {
   text-align: center;
+  
 
   &:hover {
     transition: all 0.4s;
@@ -12,11 +13,14 @@
     margin: 0;
   }
 
-  .temperature {
-    font-size: 24px;
+  figure {
+    span {
+      font-size: 24px;
+    }
   }
-  .windspeed,
-  .description {
+
+  dd {
+    margin: 0;
     text-transform: uppercase;
     font-size: 12px;
   }
