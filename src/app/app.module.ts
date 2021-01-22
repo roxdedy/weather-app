@@ -5,10 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DailyWeatherCardComponent } from './daily-weather-card/daily-weather-card.component';
 import { RecentlySearchedCitiesComponent } from './recently-searched-cities/recently-searched-cities.component';
+import { SearchForCityComponent } from './search-for-city/search-for-city.component';
 
 @NgModule({
   imports: [BrowserModule, HttpClientModule, AppRoutingModule],
-  declarations: [AppComponent, DailyWeatherCardComponent, RecentlySearchedCitiesComponent],
+  declarations: [AppComponent, DailyWeatherCardComponent, RecentlySearchedCitiesComponent, SearchForCityComponent],
   providers: [],
   bootstrap: [AppComponent],
 })
