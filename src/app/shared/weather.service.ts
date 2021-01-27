@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, delay, finalize, map } from 'rxjs/operators';
+import { catchError, delay, finalize, map, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { ICityWeather, IError } from './models';
 import * as moment from 'moment';
@@ -27,14 +27,16 @@ export class WeatherService {
       .pipe(
         delay(2000), // only for testing loading
         map((resp: any) => ({
-          id: cityId,
-          city: resp.city.name,
-          forecasts: resp.list.map((item: any) => ({
-            datetime: this.sanitizeDate(item.dt),
-            temperature: this.sanitizeTemperature(item.temp.day),
-            windspeed: item.speed,
-            description: item.weather[0].description,
-            iconUrl: this.createIconUrl(item.weather[0].icon),
+          CityId: cityId,
+          CityName: resp.city.name,
+          DailyForecasts: resp.list.map((item: any) => ({
+            UnixTimestamp: item.dt,
+            DateString: this.sanitizeDate(item.dt),
+            Temperature: this.sanitizeTemperature(item.temp.day),
+            Windspeed: item.speed,
+            Description: item.weather[0].description,
+            IconUrl: this.createIconUrl(item.weather[0].icon),
+            IsTodayDate: this.checkIfDateIsToday(item.dt),
           })),
         })),
         catchError(this.handleError),
@@ -55,15 +57,24 @@ export class WeatherService {
     return throwError({ error: errorMessage } as IError);
   }
 
-  private sanitizeDate(date: any): moment.MomentInput {
-    return moment.unix(date).format('ddd, MMMM DD');
+  private sanitizeDate(unixtimestamp: any): string {
+    const formattedDate = moment.unix(unixtimestamp).format('ddd, MMMM DD');
+
+    return this.checkIfDateIsToday(unixtimestamp) ? 'Today' : formattedDate;
   }
 
-  private sanitizeTemperature(temp: number): number {
-    return Math.ceil(temp);
+  private sanitizeTemperature(temperature: number): number {
+    return Math.ceil(temperature);
+  }
+
+  private checkIfDateIsToday(unixtimestamp: any): boolean {
+    return (
+      new Date(moment().unix() * 1000).getDate() ===
+      new Date(unixtimestamp * 1000).getDate()
+    );
   }
 
   private createIconUrl(icon: string): string {
-    return `http://openweathermap.org/img/wn/${icon}@2x.png`;
+    return `https://openweathermap.org/img/wn/${icon}@2x.png`;
   }
 }

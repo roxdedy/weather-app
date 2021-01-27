@@ -1,15 +1,17 @@
 export interface ICityWeather {
-  id: number;
-  city: string;
-  forecasts: IDailyForecast[];
+  CityId: number;
+  CityName: string;
+  DailyForecasts: IDailyForecast[];
 }
 
 export interface IDailyForecast {
-  datetime: Date;
-  temperature: number;
-  windspeed: number;
-  description: string;
-  iconUrl: string;
+  UnixTimestamp: Date;
+  DateString: string;
+  Temperature: number;
+  Windspeed: number;
+  Description: string;
+  IconUrl: string;
+  IsTodayDate: boolean;
 }
 
 export interface IError {
